@@ -1,5 +1,5 @@
 # from subdirectory.filename import function_name
-from functions.write_file import write_file
+from functions.run_python import run_python_file
 
 def main():
     # # get_files_info test 
@@ -31,15 +31,32 @@ def main():
     # print("\n")
     # #--------------------
 
-    # write_file test
-    print("Test -- write_file('calculator', 'lorem.txt', 'wait, this isn't lorem ipsum')")
-    print(write_file("calculator","lorem.txt","wait, this isn't lorem ipsum"))
+    # # write_file test
+    # #--------------------
+    # print("Test -- write_file('calculator', 'lorem.txt', 'wait, this isn't lorem ipsum')")
+    # print(write_file("calculator","lorem.txt","wait, this isn't lorem ipsum"))
+    # print("\n")
+    # print("Test -- write_file('calculator', 'pkg/morelorem.txt', 'lorem ipsum dolor sit amet')")
+    # print(write_file("calculator","pkg/morelorem.txt","lorem ipsum dolor sit amet"))
+    # print("\n")
+    # print("Test -- write_file('calculator', '/tmp/temp.txt', 'this should not be allowed')")
+    # print(write_file("calculator","/tmp/temp.txt","this should not be allowed"))
+    # print("\n")
+    # #--------------------
+
+    # run_python_file test
+    #--------------------
+    print("Testing -- run_python_file 'calculator', 'main.py'\n")
+    print(run_python_file("calculator","main.py"))
     print("\n")
-    print("Test -- write_file('calculator', 'pkg/morelorem.txt', 'lorem ipsum dolor sit amet')")
-    print(write_file("calculator","pkg/morelorem.txt","lorem ipsum dolor sit amet"))
+    print("Testing -- run_python_file 'calculator', 'tests.py'\n")
+    print(run_python_file("calculator","tests.py"))
     print("\n")
-    print("Test -- write_file('calculator', '/tmp/temp.txt', 'this should not be allowed')")
-    print(write_file("calculator","/tmp/temp.txt","this should not be allowed"))
+    print("Testing -- run_python_file 'calculator', '../main.py'\n")
+    print(run_python_file("calculator","../main.py"))
+    print("\n")
+    print("Testing -- run_python_file 'calculator', 'nonexistent.py'\n")
+    print(run_python_file("calculator","nonexistent.py"))
     print("\n")
 
 
