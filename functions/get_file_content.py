@@ -1,4 +1,6 @@
 import os
+from google.genai import types
+MAX_CHARS = 10000
 
 def get_file_content(working_directory, file_path):
     """
@@ -8,7 +10,6 @@ def get_file_content(working_directory, file_path):
     :param file_path: The relative path to the file from the working directory.
     :return: The content of the file as a string, or None if the file does not exist.
     """
-    MAX_CHARS = 10000
     try:
         base_dir = os.path.abspath(working_directory)
     except Exception as e:
@@ -27,3 +28,18 @@ def get_file_content(working_directory, file_path):
             return file_content_string
     except Exception as e:
         return f"Error reading file contents: {e}"
+
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description=f"Reads and returns the first {MAX_CHARS} characters of the content from a specified file within the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The path to the file whose content should be read, relative to the working directory.",
+            ),
+        },
+        required=["file_path"]
+    ),
+)
