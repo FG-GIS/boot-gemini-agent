@@ -5,7 +5,7 @@ from google import genai
 from google.genai import types
 
 from prompts import system_prompt
-from call_function import available_functions
+from call_function import available_functions,call_function
 
 def main():
     load_dotenv("gemini-api.env")
@@ -39,13 +39,22 @@ def generate_content(client, messages, verbose):
         contents=messages,
         config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt)
         )
+    
     if verbose:
         print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}\nResponse tokens: {response.usage_metadata.candidates_token_count}")
-    foo_calls = response.function_calls
-    if foo_calls:
-        for call in foo_calls:
-            print(f"Calling function: {call.name}({call.args})")
-    print(f"Response:\n{response.text}\n")
+
+
+    if not response.function_calls:
+        return response.text
+
+
+    for call in response.function_calls:
+            # print(f"Calling function: {call.name}({call.args})")
+            function_call_result = call_function(call,verbose)
+            if not function_call_result.parts[0].function_response.response:
+                raise Exception("Function call error, response incomplete.")
+            if verbose:
+                print(f"-> {function_call_result.parts[0].function_response.response}")
 
 
 
